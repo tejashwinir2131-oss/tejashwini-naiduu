@@ -1,0 +1,794 @@
+/* ==========================================================================
+   TEJASHWINI R. - FUTURISTIC EDITORIAL PORTFOLIO HERO
+   Aesthetic: Minimalist, Cinematic, Monochrome Halftone & Subtle Cybernetic
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap');
+
+/* --- Root Theme Variables --- */
+:root {
+    --bg-primary: #050507;
+    --bg-secondary: #0b0c10;
+    --bg-card: rgba(18, 20, 26, 0.6);
+    --text-primary: #f0f3f8;
+    --text-secondary: #8a919e;
+    --text-muted: #525968;
+    
+    --accent-blue: #00d2ff;
+    --accent-blue-dim: rgba(0, 210, 255, 0.12);
+    --accent-blue-glow: rgba(0, 210, 255, 0.35);
+    --accent-indigo: #4f46e5;
+    
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-accent: rgba(0, 210, 255, 0.3);
+    
+    --font-heading: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'Space Mono', monospace;
+
+    --halftone-opacity: 0.95;
+    --halftone-blend: screen;
+    --noise-opacity: 0.04;
+    --beam-opacity: 0.25;
+
+    --transition-standard: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-snappy: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- Light Mode Palette (Refined High-Key Editorial) --- */
+[data-theme="light"] {
+    --bg-primary: #f5f6f8;
+    --bg-secondary: #e8eaef;
+    --bg-card: rgba(255, 255, 255, 0.7);
+    --text-primary: #0a0b0e;
+    --text-secondary: #586070;
+    --text-muted: #8d95a5;
+    
+    --accent-blue: #0077cc;
+    --accent-blue-dim: rgba(0, 119, 204, 0.1);
+    --accent-blue-glow: rgba(0, 119, 204, 0.25);
+    --accent-indigo: #3b36be;
+    
+    --border-subtle: rgba(0, 0, 0, 0.08);
+    --border-accent: rgba(0, 119, 204, 0.35);
+
+    --halftone-opacity: 0.9;
+    --halftone-blend: multiply;
+    --noise-opacity: 0.02;
+    --beam-opacity: 0.12;
+}
+
+/* --- CSS Reset & Global Layout --- */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.5;
+    overflow-x: hidden;
+    min-height: 100vh;
+    transition: background-color var(--transition-standard), color var(--transition-standard);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Selection Styling --- */
+::selection {
+    background: var(--accent-blue);
+    color: #000000;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* --- Custom Subtle Ambient Grid / Scanlines & Noise Background --- */
+.noise-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 99;
+    opacity: var(--noise-opacity);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.8) 1px, transparent 0);
+    background-size: 24px 24px;
+}
+
+/* Subtle Blue Cyber Light Streaks */
+.light-streaks {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.streak {
+    position: absolute;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
+    opacity: var(--beam-opacity);
+    filter: drop-shadow(0 0 8px var(--accent-blue));
+    animation: streakFlow 8s ease-in-out infinite alternate;
+}
+
+.streak-1 {
+    top: 22%;
+    left: -20%;
+    width: 70%;
+    transform: rotate(-12deg);
+    animation-duration: 9s;
+}
+
+.streak-2 {
+    bottom: 35%;
+    right: -10%;
+    width: 60%;
+    transform: rotate(8deg);
+    animation-duration: 11s;
+    animation-delay: 2s;
+}
+
+.streak-glow-ambient {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--accent-blue-dim) 0%, transparent 70%);
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.6;
+    animation: ambientPulse 10s ease-in-out infinite alternate;
+}
+
+@keyframes streakFlow {
+    0% { transform: translate3d(-30px, 0, 0) scaleX(0.8); opacity: 0.15; }
+    50% { opacity: 0.45; }
+    100% { transform: translate3d(30px, -15px, 0) scaleX(1.15); opacity: 0.2; }
+}
+
+@keyframes ambientPulse {
+    0% { transform: translate(-50%, -30%) scale(0.9); opacity: 0.4; }
+    100% { transform: translate(-48%, -28%) scale(1.15); opacity: 0.7; }
+}
+
+/* ==========================================================================
+   MINIMAL EDITORIAL NAVIGATION BAR
+   ========================================================================== */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 1.75rem 2.5rem;
+    transition: padding var(--transition-snappy), background var(--transition-snappy), backdrop-filter var(--transition-snappy);
+}
+
+.site-header.scrolled {
+    padding: 1rem 2.5rem;
+    background: rgba(5, 5, 7, 0.75);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+[data-theme="light"] .site-header.scrolled {
+    background: rgba(245, 246, 248, 0.85);
+}
+
+.nav-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+}
+
+/* Navigation Groups */
+.nav-group {
+    display: flex;
+    align-items: center;
+    gap: 2.25rem;
+    list-style: none;
+}
+
+.nav-left {
+    justify-content: flex-start;
+}
+
+.nav-right {
+    justify-content: flex-end;
+}
+
+/* Nav Links - Understated, Uppercase, Monospace/Geometric */
+.nav-item a {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    position: relative;
+    padding: 0.35rem 0;
+    transition: color var(--transition-snappy);
+    display: inline-block;
+}
+
+.nav-item a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent-blue);
+    box-shadow: 0 0 6px var(--accent-blue);
+    transition: width var(--transition-standard);
+}
+
+.nav-item a:hover {
+    color: var(--text-primary);
+}
+
+.nav-item a:hover::after {
+    width: 100%;
+}
+
+/* Center Minimalist Logo */
+.nav-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.minimal-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+    transition: transform var(--transition-standard), border-color var(--transition-standard), box-shadow var(--transition-standard);
+    color: var(--text-primary);
+}
+
+.minimal-logo svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    transition: transform var(--transition-snappy), stroke var(--transition-snappy);
+}
+
+.minimal-logo:hover {
+    transform: scale(1.1) rotate(45deg);
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 16px var(--accent-blue-glow);
+    color: var(--accent-blue);
+}
+
+/* Theme Toggle Button (Light/Dark Switch) */
+.theme-toggle-btn {
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    padding: 0.35rem 0.65rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all var(--transition-snappy);
+    margin-left: 1rem;
+}
+
+.theme-toggle-btn:hover {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+    box-shadow: 0 0 10px var(--accent-blue-dim);
+}
+
+.toggle-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-blue);
+    box-shadow: 0 0 6px var(--accent-blue);
+}
+
+/* ==========================================================================
+   HERO SECTION - CINEMATIC MONOCHROME & HALFTONE
+   ========================================================================== */
+.hero-editorial {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: var(--bg-primary);
+}
+
+/* Main Artwork Stage */
+.hero-stage {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Oversized Halftone Artwork Container with Floating Animation */
+.artwork-container {
+    position: relative;
+    width: 85vw;
+    max-width: 900px;
+    height: 85vh;
+    max-height: 900px;
+    pointer-events: auto;
+    cursor: crosshair;
+    perspective: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: floatingArtwork 14s ease-in-out infinite alternate;
+}
+
+@keyframes floatingArtwork {
+    0% {
+        transform: translateY(0px) rotate(0deg) scale(1);
+    }
+    50% {
+        transform: translateY(-16px) rotate(0.4deg) scale(1.02);
+    }
+    100% {
+        transform: translateY(10px) rotate(-0.4deg) scale(0.99);
+    }
+}
+
+/* Artwork Inner wrapper for cursor parallax */
+.artwork-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: transform;
+}
+
+/* Hero Artwork Image */
+.hero-art-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: contrast(135%) brightness(95%) grayscale(100%);
+    opacity: 0.92;
+    transition: filter var(--transition-standard), transform var(--transition-standard);
+    mask-image: radial-gradient(circle at center, black 45%, rgba(0, 0, 0, 0.9) 65%, transparent 92%);
+    -webkit-mask-image: radial-gradient(circle at center, black 45%, rgba(0, 0, 0, 0.9) 65%, transparent 92%);
+}
+
+/* CSS Halftone & Dotted Matrix Overlay */
+.halftone-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, rgba(0, 210, 255, 0.35) 1.2px, transparent 1.3px);
+    background-size: 6px 6px;
+    opacity: 0.45;
+    mix-blend-mode: overlay;
+    transition: opacity var(--transition-standard);
+}
+
+[data-theme="light"] .halftone-overlay {
+    background-image: radial-gradient(circle, rgba(0, 0, 0, 0.4) 1.2px, transparent 1.3px);
+    mix-blend-mode: multiply;
+    opacity: 0.35;
+}
+
+/* Subtle Pixel Glitch Scanline Effect */
+.scanline-grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+    opacity: 0.5;
+}
+
+/* Interactive Hover Glitch Effect on the Artwork */
+.artwork-container:hover .hero-art-img {
+    filter: contrast(150%) brightness(105%) grayscale(90%) drop-shadow(0 0 25px var(--accent-blue-dim));
+    transform: scale(1.02);
+}
+
+.artwork-container:hover .halftone-overlay {
+    opacity: 0.7;
+    animation: halftoneShift 0.3s steps(2) infinite;
+}
+
+@keyframes halftoneShift {
+    0% { background-position: 0 0; }
+    50% { background-position: 3px 3px; }
+    100% { background-position: -2px 1px; }
+}
+
+/* ==========================================================================
+   HERO TYPOGRAPHY & INTRODUCTORY OVERLAYS
+   ========================================================================== */
+.hero-content-layer {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 1600px;
+    height: 100vh;
+    padding: 0 3rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    pointer-events: none;
+}
+
+/* Central Subtle Hero Introduction */
+.hero-intro-center {
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 90%;
+    max-width: 950px;
+    pointer-events: auto;
+}
+
+.intro-greeting {
+    font-family: var(--font-heading);
+    font-size: clamp(2.2rem, 5.5vw, 4.8rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--text-primary);
+    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+    margin-bottom: 0.75rem;
+    opacity: 0.95;
+    transition: color var(--transition-standard);
+}
+
+.intro-greeting .name-highlight {
+    background: linear-gradient(135deg, #ffffff 40%, var(--accent-blue) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    filter: drop-shadow(0 0 20px var(--accent-blue-dim));
+}
+
+[data-theme="light"] .intro-greeting .name-highlight {
+    background: linear-gradient(135deg, #0a0b0e 40%, var(--accent-blue) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.intro-role {
+    font-family: var(--font-body);
+    font-size: clamp(0.95rem, 1.6vw, 1.25rem);
+    font-weight: 400;
+    color: var(--text-secondary);
+    letter-spacing: 0.04em;
+    max-width: 650px;
+    margin: 0 auto 1.5rem auto;
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.7);
+}
+
+.intro-role .highlight-tag {
+    color: var(--accent-blue);
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    letter-spacing: 0.05em;
+    padding: 0.15rem 0.45rem;
+    border: 1px solid var(--border-accent);
+    border-radius: 4px;
+    background: var(--accent-blue-dim);
+    display: inline-block;
+    margin: 0 0.2rem;
+}
+
+/* Minimal Action Bar */
+.hero-cta-minimal {
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-top: 1rem;
+}
+
+.cta-btn-minimal {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.75rem 1.6rem;
+    border-radius: 4px;
+    transition: all var(--transition-snappy);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.cta-primary {
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    border: 1px solid var(--text-primary);
+}
+
+.cta-primary:hover {
+    background: var(--accent-blue);
+    border-color: var(--accent-blue);
+    color: #000000;
+    box-shadow: 0 0 20px var(--accent-blue-glow);
+    transform: translateY(-2px);
+}
+
+.cta-ghost {
+    background: rgba(18, 20, 26, 0.4);
+    backdrop-filter: blur(8px);
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+}
+
+.cta-ghost:hover {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+    background: var(--accent-blue-dim);
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   LOWER LABELS & BOTTOM CORNER TECHNICAL ELEMENTS
+   ========================================================================== */
+.hero-footer-elements {
+    position: absolute;
+    bottom: 2.25rem;
+    left: 0;
+    width: 100%;
+    padding: 0 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    pointer-events: none;
+    z-index: 20;
+}
+
+/* Lower-Left Information Label (Reference Matching) */
+.info-label-left {
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    border-left: 2px solid var(--accent-blue);
+    padding-left: 0.9rem;
+}
+
+.info-label-name {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+}
+
+.info-label-role {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.info-label-status {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--accent-blue);
+    margin-top: 0.2rem;
+}
+
+.status-indicator {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--accent-blue);
+    box-shadow: 0 0 8px var(--accent-blue);
+    animation: blinkStatus 2.2s infinite ease-in-out;
+}
+
+@keyframes blinkStatus {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(0.85); }
+}
+
+/* Lower-Right Corner Minimal Technical Info & Socials */
+.info-label-right {
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.6rem;
+}
+
+.corner-tech-meta {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.16em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    text-align: right;
+}
+
+.corner-social-links {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.corner-social-links a {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    color: var(--text-secondary);
+    transition: color var(--transition-snappy), transform var(--transition-snappy);
+    position: relative;
+}
+
+.corner-social-links a:hover {
+    color: var(--accent-blue);
+    transform: translateY(-2px);
+}
+
+.corner-shift-tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    padding: 0.15rem 0.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 3px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .site-header {
+        padding: 1.25rem 1.5rem;
+    }
+    
+    .nav-group {
+        gap: 1.25rem;
+    }
+    
+    .hero-footer-elements {
+        padding: 0 1.5rem;
+        bottom: 1.5rem;
+    }
+    
+    .artwork-container {
+        width: 95vw;
+        height: 75vh;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-group {
+        gap: 0.9rem;
+    }
+    
+    .nav-item a {
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+    }
+    
+    .theme-toggle-btn {
+        margin-left: 0.4rem;
+        padding: 0.25rem 0.45rem;
+    }
+
+    .hero-intro-center {
+        top: 50%;
+        width: 92%;
+    }
+
+    .intro-greeting {
+        font-size: 2.1rem;
+    }
+
+    .intro-role {
+        font-size: 0.9rem;
+    }
+
+    .hero-footer-elements {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.25rem;
+        bottom: 1rem;
+        padding: 0 1.25rem;
+    }
+
+    .info-label-right {
+        align-items: flex-start;
+    }
+
+    .corner-tech-meta {
+        text-align: left;
+    }
+
+    .artwork-container {
+        width: 100vw;
+        height: 68vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-container {
+        grid-template-columns: auto 1fr auto;
+    }
+
+    .nav-left .nav-item:nth-child(2),
+    .nav-right .nav-item:nth-child(1) {
+        display: none; /* Keep key links visible on ultra-small screens */
+    }
+
+    .intro-greeting {
+        font-size: 1.8rem;
+    }
+
+    .hero-cta-minimal {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .cta-btn-minimal {
+        justify-content: center;
+        width: 100%;
+    }
+}
